@@ -1,1 +1,21 @@
+# Inventory System + URSim
 
+Et simpelt lagerstyringssystem, der kommunikerer med en Universal Robots simulator (URSim) via TCP.  
+Projektet viser, hvordan en robot kan “plukke” ordrer og flytte dem i simulatoren.
+
+## Opsætning
+1. Start URSim:
+   ```bash
+   docker run -d -p 29999:29999 -p 30002:30002 -p 6080:6080 universalrobots/ursim_e-series:latest
+2. Åbn http://localhost:6080
+
+3. I URSim:
+- Gå til Installation → Payload → sæt fx 0.5 kg
+- Feature = Base, TCP = Tool Flange
+
+4. Kør GUI’en (C#), og tryk Process Next Order for at sende et URScript.
+
+Kendt problem
+- Robotten bevæger sig forkert ift. de viste koordinater.
+  Dette skyldes fejl i koordinatsystemet (Feature = View) og skaleringsforskelle mellem GUI og URSim.
+  Brug altid Base-feature, og justér Z-værdierne (typisk 0.5–0.6 m over basen) for realistiske bevægelser.
